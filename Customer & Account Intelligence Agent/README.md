@@ -92,6 +92,7 @@ This project demonstrates my ability to:
 - Translate unstructured information into actionable insights  
 - Think in terms of prioritization and tradeoffs  
 - Connect business signals to customer and product implications  
-- Support decision-making across GTM, Customer Success, and Support teams  
+- Support decision-making across GTM, Customer Success, and Support teams
+- Frame account analysis in terms of revenue potential, sales cycle risk, and expansion opportunity — not just operational fit.
 
 The focus is not just analysis, but helping teams decide **where to focus and how to act**.
