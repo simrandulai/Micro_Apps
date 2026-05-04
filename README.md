@@ -2,7 +2,7 @@
 A collection of lightweight, AI-assisted tools designed to bridge data, customer experience, and product decision-making.  
 These projects focus on turning raw signals and user feedback into clear, actionable insights for Product, Customer Support, and Operations teams.
 
-<a href='https://simrandulai.github.io/Micro_Apps/' target=_blank><u>Live apps.</u>.</a>
+<a href='https://simrandulai.github.io/Micro_Apps/' target=_blank><u>Live apps</u>.</a>
 
 | Project | Title | Description |
 | :-----------: | ----------- | ----------- |
