@@ -5,7 +5,7 @@ This project is a lightweight AI-assisted tool designed to simulate how Product,
 The goal is to turn external signals and company-level data into clear, structured insights that help teams decide where to focus and what actions to take.
 
 ### App Interface
-App can be found <a href='[https://simrandulai.github.io/Micro_Apps/](https://simrandulai.github.io/Micro_Apps/Customer%20%26%20Account%20Intelligence%20Agent/)' target=_blank><u>here</u>.</a>
+App can be found <a href='https://simrandulai.github.io/Micro_Apps/Customer%20%26%20Account%20Intelligence%20Agent/' target=_blank><u>here</u>.</a>
 
 ---
 
