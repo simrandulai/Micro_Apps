@@ -66,7 +66,7 @@ Structured account report including:
 ### Process
 
 1. Input a company or account name  
-2. Use a structured prompt in Claude/GPT to analyze the account  
+2. Use a structured prompt in Claude to analyze the account  
 3. Generate categorized insights (signals, risks, opportunities)  
 4. Translate insights into clear, actionable recommendations  
 5. Format output for easy decision-making  
