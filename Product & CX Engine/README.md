@@ -7,7 +7,7 @@ The goal is to simulate how high-performing Customer Success, Product, and CX Op
 ---
 
 ### App Interface  
-App can be found <a href='https://simrandulai.github.io/Micro_Apps/Product%20%26%20CX%20Engine/' target="_blank"><u>here</u></a>.
+<a href='https://simrandulai.github.io/Micro_Apps/Product%20%26%20CX%20Engine/' target="_blank"><u>Live app</u></a>.
 
 ---
 
@@ -94,7 +94,7 @@ The tool generates a structured **Support & CX Insights Report** including:
 
 ### Example
 
-See: `Support & CX Insights Report — 20 Tickets`
+See: `Product & CX Insights Report — 20 Tickets`
 
 This example demonstrates how the tool:
 
