@@ -115,7 +115,7 @@ This project demonstrates my ability to:
 - Think in terms of root cause, not just surface issues  
 - Prioritize work based on impact and scale  
 - Bridge Customer Support, Product, and Operations
-- Quantify the business impact of fixing customer friction — connecting support data directly to activation rates, ticket volume reduction, and retention risk.
+- Quantify the business impact of friction — from ticket volume to activation and retention
 
 The focus is not just analyzing tickets, but helping teams answer:  
 **What should we fix, why does it matter, and what will it improve?**
