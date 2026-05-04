@@ -1,0 +1,203 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0a0a0f; --surface: #12121a; --surface2: #1a1a24; --border: #2a2a3a;
+    --text: #e8e8f0; --text2: #888; --text3: #444; --accent: #7b6cff; --accent2: #5a4de0; --green: #4fffb0;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'IBM Plex Sans', sans-serif; }
+  .shell { padding: 1.5rem 0; }
+  .header { margin-bottom: 1.5rem; }
+  .header h1 { font-size: 18px; font-weight: 500; color: var(--text); }
+  .header h1 span { color: var(--accent); }
+  .header p { font-size: 13px; color: var(--text2); margin-top: 4px; line-height: 1.5; }
+  .tabs { display: flex; gap: 4px; margin-bottom: 1.25rem; background: var(--surface); border-radius: 8px; padding: 4px; border: 1px solid var(--border); }
+  .tab { flex: 1; padding: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.05em; text-align: center; cursor: pointer; border-radius: 6px; color: var(--text2); border: none; background: none; transition: all 0.15s; }
+  .tab.active { background: var(--accent); color: white; }
+  .panel { display: none; } .panel.active { display: block; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem; }
+  label { display: block; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--text3); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+  input[type=text], select, textarea { width: 100%; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; font-family: 'IBM Plex Sans', sans-serif; font-size: 14px; color: var(--text); outline: none; transition: border-color 0.15s; }
+  input[type=text]:focus, select:focus, textarea:focus { border-color: var(--accent); }
+  input[type=text]::placeholder, textarea::placeholder { color: var(--text3); }
+  select option { background: var(--surface2); }
+  textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
+  .field { margin-bottom: 10px; } .field:last-child { margin-bottom: 0; }
+  .ticket-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; max-height: 280px; overflow-y: auto; }
+  .ticket-row { display: grid; grid-template-columns: 1fr 140px 100px 28px; gap: 8px; align-items: center; }
+  .ticket-row input, .ticket-row select { margin: 0; font-size: 13px; padding: 8px 10px; }
+  .del-btn { background: none; border: 1px solid var(--border); border-radius: 6px; color: var(--text3); cursor: pointer; font-size: 14px; width: 28px; height: 34px; display: flex; align-items: center; justify-content: center; transition: all 0.15s; flex-shrink: 0; }
+  .del-btn:hover { border-color: #ff5e5e; color: #ff5e5e; }
+  .col-headers { display: grid; grid-template-columns: 1fr 140px 100px 28px; gap: 8px; margin-bottom: 6px; }
+  .col-headers span { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--text3); letter-spacing: 0.06em; text-transform: uppercase; }
+  .add-btn { background: none; border: 1px dashed var(--border); border-radius: 8px; color: var(--text2); font-size: 13px; cursor: pointer; padding: 8px; width: 100%; transition: all 0.15s; font-family: 'IBM Plex Sans', sans-serif; margin-bottom: 10px; }
+  .add-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .run-btn { width: 100%; padding: 12px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.05em; cursor: pointer; background: var(--accent); color: white; border: none; border-radius: 8px; transition: background 0.15s; }
+  .run-btn:hover { background: var(--accent2); }
+  .sample-btn { width: 100%; padding: 8px; font-size: 12px; cursor: pointer; background: none; border: 1px solid var(--border); border-radius: 8px; color: var(--text2); font-family: 'IBM Plex Sans', sans-serif; margin-bottom: 10px; transition: all 0.15s; }
+  .sample-btn:hover { border-color: var(--green); color: var(--green); }
+  .toast { display: none; background: #0f2a1f; border: 1px solid #1a5a3f; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: var(--green); margin-top: 10px; }
+  .toast.visible { display: block; }
+  .how { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .how-title { padding: 10px 14px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--text3); letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid var(--border); background: var(--surface); }
+  .step { display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--text2); line-height: 1.5; }
+  .step:last-child { border-bottom: none; }
+  .step-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); min-width: 20px; padding-top: 1px; }
+  .step strong { color: var(--text); font-weight: 500; }
+  .bulk-hint { font-size: 12px; color: var(--text3); margin-bottom: 8px; line-height: 1.5; }
+</style>
+
+<div class="shell">
+  <div class="header">
+    <h1>Support & CX <span>Insights Engine</span></h1>
+    <p>Turn support tickets into product improvements, CX fixes, and business impact estimates — powered by Claude.</p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('manual')">ENTER TICKETS</button>
+    <button class="tab" onclick="switchTab('bulk')">PASTE BULK</button>
+  </div>
+
+  <div class="panel active" id="panel-manual">
+    <div class="card">
+      <div class="col-headers">
+        <span>Customer issue</span><span>Journey stage</span><span>Severity</span><span></span>
+      </div>
+      <div class="ticket-list" id="ticketList"></div>
+      <button class="sample-btn" onclick="loadSamples()">+ Load 20 sample tickets</button>
+      <button class="add-btn" onclick="addTicket()">+ Add ticket</button>
+      <button class="run-btn" onclick="runManual()">→ Analyze tickets</button>
+      <div class="toast" id="toast-manual">Prompt copied to clipboard — paste into Claude.ai to run.</div>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-bulk">
+    <div class="card">
+      <div class="field">
+        <label>Paste tickets (one per line, or comma/tab separated)</label>
+        <p class="bulk-hint">Paste directly from a spreadsheet, CSV, or type one ticket per line.</p>
+        <textarea id="bulkText" rows="8" placeholder="Unable to log in after password reset&#10;Confused about billing cycle&#10;Feature not working as expected&#10;..."></textarea>
+      </div>
+      <button class="run-btn" onclick="runBulk()">→ Analyze tickets</button>
+      <div class="toast" id="toast-bulk">Prompt copied to clipboard — paste into Claude.ai to run.</div>
+    </div>
+  </div>
+
+  <div class="how" style="margin-top:1rem;">
+    <div class="how-title">What you get back</div>
+    <div class="step"><span class="step-num">01</span><span><strong>Theme clusters</strong> — tickets grouped by pattern with counts and %</span></div>
+    <div class="step"><span class="step-num">02</span><span><strong>Root causes</strong> — product gap, UX issue, process failure, or communication gap</span></div>
+    <div class="step"><span class="step-num">03</span><span><strong>Product + support fixes</strong> — specific improvements per theme</span></div>
+    <div class="step"><span class="step-num">04</span><span><strong>Business impact estimate</strong> — activation rate, ticket reduction, and revenue implications</span></div>
+    <div class="step"><span class="step-num">05</span><span><strong>Top 2 opportunities</strong> — highest-impact wins to action first</span></div>
+    <div class="step"><span class="step-num">06</span><span><strong>Journey stage breakdown</strong> — where in the lifecycle friction is concentrated</span></div>
+  </div>
+</div>
+
+<script>
+  const STAGES = ['Onboarding','Active use','Billing','Retention'];
+  const SEVERITIES = ['Low','Medium','High','Critical'];
+  const SAMPLES = [
+    {issue:"Unable to log in after password reset",stage:"Onboarding",severity:"High"},
+    {issue:"Confused about billing cycle dates",stage:"Billing",severity:"Medium"},
+    {issue:"Feature not working as expected",stage:"Active use",severity:"High"},
+    {issue:"Onboarding took too long, unclear next steps",stage:"Onboarding",severity:"Medium"},
+    {issue:"Can't find how to export my data",stage:"Active use",severity:"Medium"},
+    {issue:"Charged twice this month",stage:"Billing",severity:"Critical"},
+    {issue:"Integration with Slack not syncing",stage:"Active use",severity:"High"},
+    {issue:"No response from support for 3 days",stage:"Retention",severity:"Critical"},
+    {issue:"Cancellation process is too complicated",stage:"Retention",severity:"High"},
+    {issue:"Dashboard loads very slowly",stage:"Active use",severity:"Medium"},
+    {issue:"Welcome email link expired before I clicked it",stage:"Onboarding",severity:"Medium"},
+    {issue:"Invoice not matching what I was quoted",stage:"Billing",severity:"High"},
+    {issue:"Can't add team members to my account",stage:"Active use",severity:"Medium"},
+    {issue:"Notifications not arriving on mobile",stage:"Active use",severity:"Low"},
+    {issue:"Upgrade plan page keeps erroring out",stage:"Billing",severity:"High"},
+    {issue:"Didn't receive onboarding call I was promised",stage:"Onboarding",severity:"Medium"},
+    {issue:"Product tour is confusing and outdated",stage:"Onboarding",severity:"Low"},
+    {issue:"Account was locked without explanation",stage:"Retention",severity:"Critical"},
+    {issue:"Downgrade option not visible in settings",stage:"Billing",severity:"Medium"},
+    {issue:"API rate limits not documented clearly",stage:"Active use",severity:"Medium"},
+  ];
+
+  let tickets = [];
+
+  function switchTab(name) {
+    document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active',['manual','bulk'][i]===name));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-'+name).classList.add('active');
+  }
+
+  function renderTickets() {
+    document.getElementById('ticketList').innerHTML = tickets.map((t,i) => `
+      <div class="ticket-row">
+        <input type="text" placeholder="Describe the issue..." value="${t.issue.replace(/"/g,'&quot;')}" oninput="tickets[${i}].issue=this.value" />
+        <select onchange="tickets[${i}].stage=this.value">${STAGES.map(s=>`<option ${t.stage===s?'selected':''}>${s}</option>`).join('')}</select>
+        <select onchange="tickets[${i}].severity=this.value">${SEVERITIES.map(s=>`<option ${t.severity===s?'selected':''}>${s}</option>`).join('')}</select>
+        <button class="del-btn" onclick="removeTicket(${i})">×</button>
+      </div>`).join('');
+  }
+
+  function addTicket() { tickets.push({issue:'',stage:'Active use',severity:'Medium'}); renderTickets(); }
+  function removeTicket(i) { tickets.splice(i,1); renderTickets(); }
+  function loadSamples() { tickets = SAMPLES.map(s=>({...s})); renderTickets(); }
+
+  function buildPrompt(ticketData) {
+    return `Act as a product analyst and customer support operations specialist with strong business acumen.
+
+You are given the following dataset of ${ticketData.length} customer support tickets:
+
+${ticketData.map((t,i) => `${i+1}. [${t.stage||'Unknown'}] [${t.severity||'Medium'}] ${t.issue}`).join('\n')}
+
+Your task:
+
+1. **Theme Clusters** — Group tickets into 4–6 key themes. For each theme show: theme name, ticket count, % of total, and which ticket numbers belong to it.
+
+2. **Root Causes** — For each theme, identify the underlying root cause (product gap, UX issue, process failure, communication gap, etc.)
+
+3. **Recommendations** — For each theme provide:
+   - Product improvement (what to build or fix)
+   - Support improvement (macro, help article, automation, or process change)
+
+4. **Impact Estimate** — For each theme include:
+   - % reduction in ticket volume if improvements are implemented
+   - ONE concrete quantitative metric (e.g. "Fixing onboarding friction could increase activation rate by ~15–20% based on ticket volume concentration in this stage")
+   - A revenue implication line (e.g. "Improving integration reliability directly protects expansion revenue from enterprise accounts")
+   - Overall projected ticket volume reduction across all themes
+
+5. **Top 2 High-Impact Opportunities** — The 2 changes with the biggest combined effect. Be specific, operator-level, and concise. Avoid narrative language — use sharp, business-impact framing (e.g. "Reduces time-to-first-value and increases activation" not "users will reach their aha moment faster").
+
+6. **Journey Stage Breakdown** — Summarize which journey stages have the most tickets and what that signals about revenue risk or retention risk.
+
+Output in a clear, structured format suitable for product, support, and revenue teams.`;
+  }
+
+  function sendOrCopy(prompt, toastId) {
+    if (typeof sendPrompt === 'function') {
+      sendPrompt(prompt);
+    } else {
+      navigator.clipboard.writeText(prompt).then(() => {
+        const t = document.getElementById(toastId);
+        t.classList.add('visible');
+        setTimeout(() => t.classList.remove('visible'), 5000);
+      });
+    }
+  }
+
+  function runManual() {
+    const filled = tickets.filter(t => t.issue.trim());
+    if (!filled.length) { alert('Please add at least one ticket or load the samples.'); return; }
+    sendOrCopy(buildPrompt(filled), 'toast-manual');
+  }
+
+  function runBulk() {
+    const raw = document.getElementById('bulkText').value.trim();
+    if (!raw) { alert('Please paste some tickets first.'); return; }
+    const ticketData = raw.split('\n').map(l=>l.trim()).filter(Boolean).map(l=>({issue:l,stage:'Unknown',severity:'Medium'}));
+    sendOrCopy(buildPrompt(ticketData), 'toast-bulk');
+  }
+
+  tickets = [{issue:'',stage:'Onboarding',severity:'Medium'},{issue:'',stage:'Active use',severity:'Medium'},{issue:'',stage:'Billing',severity:'Medium'}];
+  renderTickets();
+</script>
