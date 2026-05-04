@@ -4,6 +4,9 @@ This project is a lightweight AI-assisted tool designed to simulate how Product,
 
 The goal is to turn external signals and company-level data into clear, structured insights that help teams decide where to focus and what actions to take.
 
+### App Interface
+View the app file: <a href="./app1/index.html" target="_blank"><u>Open HTML</u></a>
+
 ---
 
 ### Table of Contents
